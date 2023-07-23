@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebSocket Chat Example</title>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      function sendMessage() {
+        const messageInput = document.getElementById("messageInput");
+        const message = messageInput.value;
+        messageInput.value = "";
+
+        socket.emit("chatMessage", message);
+      }
+
+      socket.on("chatMessage", (message) => {
+        const messageDiv = document.createElement("div");
+        messageDiv.textContent = message;
+        document.getElementById("chatMessages").appendChild(messageDiv);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="chatMessages"></div>
+    <input type="text" id="messageInput" />
+    <button onclick="sendMessage()">Send</button>
+  </body>
+</html>
